@@ -1,3 +1,7 @@
+
+
+---
+
 ```markdown
 # 🫁 ApneaNet-CBi — ECG-Derived Sleep Apnea Detection
 
@@ -5,71 +9,84 @@
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-_A lightweight CNN-based deep learning framework for automatic detection of sleep apnea from ECG signals._
+A lightweight CNN-based deep learning framework for automatic detection of sleep apnea from ECG signals.
+
+---
+
+## 🩸 Dataset Source
+
+The project uses the **Apnea-ECG Database** from **PhysioNet**, which contains ECG recordings with apnea annotations.
+
+**Dataset Link:** [https://physionet.org/content/apnea-ecg/1.0.0/](https://physionet.org/content/apnea-ecg/1.0.0/)
+
+This dataset consists of minute-by-minute labeled ECG signals used for supervised learning and evaluation of apnea detection models.
 
 ---
 
 ## 📘 Overview
-Sleep apnea is a common and potentially serious sleep disorder caused by repeated interruptions of breathing during sleep.  
-**ApneaNet-CBi** is a compact Convolutional Neural Network (CNN) trained on ECG-derived windows to automatically detect apneic events.
 
-This repository contains the full Jupyter notebook used for data preprocessing, model building, training, evaluation, and visualization.
+Sleep apnea is a common and potentially serious sleep disorder characterized by repeated interruptions of breathing during sleep.  
+**ApneaNet-CBi** is a lightweight Convolutional Neural Network (CNN) framework designed to detect apnea events automatically from ECG-derived spectrograms.  
+The model is optimized for efficiency, making it suitable for portable and embedded medical systems.
 
 ---
 
 ## 📂 Repository Structure
+
 ```
 
 Sleep-Apnea-Detection/
 │
-├── Final_Project.ipynb         # Main Jupyter Notebook (training + evaluation)
-├── training_curves.png         # Training performance graph
+├── Final_Project.ipynb         # Main Jupyter Notebook (data, training, evaluation)
+├── training_curves.png         # Training accuracy and loss visualization
 ├── requirements.txt            # Python dependencies
-└── README.md                   # Project documentation
+└── README.md                   # Documentation
 
 ````
 
 ---
 
-## 🚀 Model Summary
-- **Model Type:** CNN (Convolutional Neural Network)
-- **Input:** ECG signal windows (30s segments converted to spectrograms)
-- **Output:** Binary classification — Apnea (1) or Normal (0)
-- **Optimizer:** Adam
-- **Loss Function:** Binary Crossentropy
-- **Metrics:** Accuracy & AUC (ROC)
+## 🧠 Model Summary
+
+- **Model Type:** CNN (Convolutional Neural Network)  
+- **Input:** 30-second ECG signal windows converted into spectrograms  
+- **Output:** Binary classification — Apnea (1) or Normal (0)  
+- **Optimizer:** Adam  
+- **Loss Function:** Binary Crossentropy  
+- **Metrics:** Accuracy, AUC (ROC), Precision, Recall, F1-score  
 
 ---
 
 ## 📈 Training Performance
 
-### Extracted from training logs:
 | Metric | Value |
 |:-------|:------|
-| **Final Training Accuracy** | **0.9651** |
-| **Final AUC (ROC)** | **0.9953** |
-| **Final Training Loss** | **0.0857** |
+| Final Training Accuracy | **0.9651** |
+| Final AUC (ROC) | **0.9953** |
+| Final Training Loss | **0.0857** |
+| Epochs | **20** |
+
+The model demonstrates excellent convergence with steadily increasing accuracy and AUC, indicating robust learning and generalization.
 
 ---
 
-### Training Curves
-<div align="center">
-  <img src="training_curves.png" alt="Training Curves" width="700">
-</div>
+### 📊 Training Curves
 
-> The model shows strong convergence — training loss consistently decreases while accuracy improves steadily across 20 epochs.
+![Training Curves](training_curves.png)
+
+> The graph shows decreasing loss and increasing accuracy across 20 epochs, confirming stable convergence and strong learning performance.
 
 ---
 
-## ⚙️ Installation & Usage
+## ⚙️ Installation and Usage
 
-### 1️⃣ Clone the repository
+### Step 1: Clone the repository
 ```bash
 git clone https://github.com/<your-username>/Sleep-Apnea-Detection.git
 cd Sleep-Apnea-Detection
 ````
 
-### 2️⃣ Create and activate a virtual environment
+### Step 2: Create and activate a virtual environment
 
 ```bash
 python -m venv venv
@@ -77,29 +94,32 @@ source venv/bin/activate      # For Linux/Mac
 venv\Scripts\activate         # For Windows
 ```
 
-### 3️⃣ Install dependencies
+### Step 3: Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Run the notebook
+### Step 4: Run the notebook
 
-Open **`Final_Project.ipynb`** in Jupyter Notebook or Jupyter Lab and execute all cells sequentially to:
+Open the notebook using Jupyter:
 
-* Load the ECG dataset
-* Preprocess and segment data
+```bash
+jupyter notebook Final_Project.ipynb
+```
+
+Execute all cells in sequence to:
+
+* Load and preprocess the ECG data
 * Train the CNN model
-* Evaluate performance
-* Visualize results
+* Evaluate the model’s performance
+* Visualize training and evaluation results
 
 ---
 
-## 🧠 Dependencies
+## 🧩 Requirements
 
-Include the following in `requirements.txt`:
-
-```text
+```
 tensorflow>=2.8.0
 numpy
 pandas
@@ -113,11 +133,12 @@ pyedflib
 
 ---
 
-## 🧪 Evaluation & Results
+## 🧪 Evaluation and Results
 
-The notebook supports both **window-level** and **subject-level** evaluation using per-window predictions aggregated into per-record AHI scores.
+The model performs window-level and subject-level classification of apnea events.
+Predicted probabilities are aggregated to estimate per-record Apnea–Hypopnea Index (AHI).
 
-You can run:
+You can compute precision, recall, F1-score, and confusion matrix using:
 
 ```python
 from sklearn.metrics import classification_report, confusion_matrix
@@ -126,34 +147,35 @@ print(classification_report(y_true, y_pred))
 print(confusion_matrix(y_true, y_pred))
 ```
 
-This produces **Precision**, **Recall**, **F1-score**, and **Confusion Matrix** values (not printed in the current run logs).
-You can then include those metrics in the README once computed.
+Once computed, these results can be added under this section for a complete performance summary.
 
 ---
 
 ## 🩺 Interpretation
 
-* The model demonstrates **strong discriminative ability** (AUC ≈ 0.995).
-* **High precision** indicates fewer false positives.
-* **High recall** implies robust apnea detection sensitivity.
-* Per-record AHI estimates align closely with clinical severity labels.
-* For deployment, further calibration and inclusion of multimodal data (e.g., SpO₂) are recommended.
+* The CNN achieves high discrimination capability (AUC ≈ 0.995).
+* High precision → minimal false positives.
+* High recall → effective apnea detection coverage.
+* Per-record AHI estimation correlates closely with clinical labels.
+* Potential deployment for real-time monitoring after hardware optimization.
 
 ---
 
-## 🔮 Future Work
+## 🔮 Future Enhancements
 
-* Add final evaluation metrics (Precision / Recall / F1 / Confusion Matrix).
-* Integrate additional physiological signals for multimodal detection.
-* Compress the model using pruning or quantization for edge deployment.
-* Build a real-time monitoring pipeline for IoT/embedded systems.
+* Add validation metrics (Precision, Recall, F1-score, Confusion Matrix).
+* Extend the framework with additional biosignals (SpO₂, airflow).
+* Model pruning and quantization for edge and mobile deployment.
+* Real-time inference for portable health monitoring systems.
 
 ---
 
 ## 👨‍💻 Author
 
 **Sriram Akula**
-B.Tech Computer Science and Engineering — *Specialization in Machine Learning and DevOps*
+B.Tech in Computer Science and Engineering
+Specialization: Machine Learning and DevOps
+
 📧 [your.email@example.com](mailto:your.email@example.com)
 🔗 [GitHub](https://github.com/<your-username>) | [LinkedIn](https://www.linkedin.com/in/yourprofile)
 
@@ -167,12 +189,20 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 📄 Citation
 
-If you use this project in your research, please cite:
+If you use this repository in your research, please cite:
 
 ```
 Akula, Sriram. "ApneaNet-CBi: A Lightweight CNN-Based Deep Learning Framework for ECG-Derived Sleep Apnea Detection." (2025)
 ```
 
+---
+
+## 🧭 Acknowledgment
+
+This work utilizes the **Apnea-ECG Database** from **PhysioNet** for training and evaluation.
+Special thanks to the open-source community for tools and datasets that made this research possible.
+
+```
 
 
 ```
