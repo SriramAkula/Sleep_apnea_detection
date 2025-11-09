@@ -202,7 +202,4 @@ Akula, Sriram. "ApneaNet-CBi: A Lightweight CNN-Based Deep Learning Framework fo
 This work utilizes the **Apnea-ECG Database** from **PhysioNet** for training and evaluation.
 Special thanks to the open-source community for tools and datasets that made this research possible.
 
-```
 
-
-```
